@@ -37,14 +37,14 @@
             android:padding="10dp" />
 
 
-        <EditText
+        <com.blackcat.currencyedittext.CurrencyEditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:hint="Preco"
+            android:hint="1060.00 MTn"
             android:inputType="textPersonName"
             android:padding="10dp" />
 
