@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FoodApp</string>
+    <string name="a_lista_de_produtos_ainda_encontra_se_vazia_adicione_itens">A lista de Produtos ainda encontra-se vazia, adicione itens</string>
 </resources>
