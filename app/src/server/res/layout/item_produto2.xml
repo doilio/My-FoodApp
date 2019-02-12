@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/item_produto_imagem"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#757575"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/food1" />
+
+    <TextView
+        android:id="@+id/item_produto_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/item_produto_imagem"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toRightOf="@id/item_produto_imagem"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        tools:text="Batata" />
+
+    <TextView
+        android:id="@+id/item_produto_unidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_produto_nome"
+        android:layout_alignLeft="@id/item_produto_nome"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#8B000000"
+        android:textSize="14sp"
+        tools:text="12 Kg" />
+
+
+    <TextView
+        android:id="@+id/item_produto_preco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_produto_unidade"
+        android:layout_alignLeft="@id/item_produto_unidade"
+        android:fontFamily="sans-serif"
+        android:textColor="#8B000000"
+        android:textSize="14sp"
+        tools:text="37.00 MTn" />
+
+</RelativeLayout>

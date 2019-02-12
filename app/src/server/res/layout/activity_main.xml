@@ -22,6 +22,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
+        tools:listitem="@layout/item_produto2"
         app:layout_constraintVertical_bias="0.0" />
 
     <!--Preparar um Layout para mostrar caso a DB esteja vazia-->

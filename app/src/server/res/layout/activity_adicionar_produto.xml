@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.dowy.foodapp.AdicionarProdutoActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_product_image_here"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="Preco"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar Produto"
+            tools:layout_editor_absoluteX="115dp"
+            tools:layout_editor_absoluteY="451dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
