@@ -42,8 +42,6 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
     private EditText campoNome;
     private CurrencyEditText campoValor;
     private static final int SELECAO_GALERIA = 200;
-    private FirebaseFirestore firestoreRef;
-    private CollectionReference produtoRef;
     private List<String> listaImagem = new ArrayList<>();
     private StorageReference storageRef;
     private StorageReference alimentosRef;
@@ -143,6 +141,7 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
                     produto.salvar();
 
                     dialog.dismiss();
+                    finish();
                     Toast.makeText(AdicionarProdutoActivity.this, "Produto Salvo", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(AdicionarProdutoActivity.this, "Erro ao carregar Imagem", Toast.LENGTH_SHORT).show();
@@ -158,9 +157,6 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
         produtoImagem = findViewById(R.id.imageViewProduto);
         produto = new Produto();
 
-        //Firebase
-        firestoreRef = ConfiguracaoFirebase.getFireStore();
-        produtoRef = firestoreRef.collection("Produto");
 
         Locale locale = new Locale("pt", "MZ");
         campoValor.setLocale(locale);

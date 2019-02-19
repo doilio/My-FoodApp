@@ -3,12 +3,35 @@ package com.example.dowy.foodapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.dowy.foodapp.adapter.ProdutoAdapter;
+import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
+import com.example.dowy.foodapp.model.Produto;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView mRecyclerView;
+    private ProdutoAdapter adapter;
+    private List<Produto> listaProdutos = new ArrayList<>();
+    private FirebaseFirestore firestore;
+    private CollectionReference produtoRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +44,43 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Configuracoes Iniciais
-        configuracoesIniciais();
+        inicializarComponentes();
+
+        // Configurar RecyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+
+        //Configurar Adapter
+        adapter = new ProdutoAdapter(this, listaProdutos);
+        mRecyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Insert loader aqui
+        produtoRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    // There's an exception... LEAVE
+                    return;
+                }
+                listaProdutos.clear();
+                for (QueryDocumentSnapshot ds : queryDocumentSnapshots) {
+                    Produto produto = ds.toObject(Produto.class);
+                    produto.setId(ds.getId());
+                    listaProdutos.add(produto);
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+
+            // dismiss loader aqui
+        });
+
     }
 
     @Override
@@ -52,7 +111,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void configuracoesIniciais() {
+    private void inicializarComponentes() {
+        mRecyclerView = findViewById(R.id.recyclerProdutos);
+
+        // Firebase
+        firestore = ConfiguracaoFirebase.getFireStore();
+        produtoRef = firestore.collection("Produto");
+
 
     }
 
