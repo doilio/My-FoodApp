@@ -1,4 +1,4 @@
-package com.example.dowy.foodapp;
+package com.example.dowy.foodapp.helper;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

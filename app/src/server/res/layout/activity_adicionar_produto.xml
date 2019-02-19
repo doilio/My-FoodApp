@@ -10,7 +10,7 @@
     <include layout="@layout/toolbar"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewProduto"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="16dp"
@@ -24,9 +24,8 @@
         android:padding="16dp">
 
 
-
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/editNomeProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -38,7 +37,7 @@
 
 
         <com.blackcat.currencyedittext.CurrencyEditText
-            android:id="@+id/editText2"
+            android:id="@+id/editValorProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -50,9 +49,10 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/salvarProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="validarCampos"
             android:text="Salvar Produto"
             tools:layout_editor_absoluteX="115dp"
             tools:layout_editor_absoluteY="451dp" />
