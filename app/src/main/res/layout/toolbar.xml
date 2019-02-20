@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,10 +12,16 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
+    <com.miguelcatalan.materialsearchview.MaterialSearchView
+        android:id="@+id/materialSearchPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <!-- Shadow under toolbar-->
-    <View
+    <!--View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/bg_shadow"/>
+        android:background="@drawable/bg_shadow"
+        android:layout_gravity="bottom"/-->
 
-</LinearLayout>
+</FrameLayout>

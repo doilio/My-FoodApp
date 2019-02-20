@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.dowy.foodapp.adapter.ProdutoAdapter;
 import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
@@ -22,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Produto> listaProdutos = new ArrayList<>();
     private FirebaseFirestore firestore;
     private CollectionReference produtoRef;
+    private MaterialSearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,89 @@ public class MainActivity extends AppCompatActivity {
                 }
         ));
 
+
+
+        // Configurar Listener para o Search Box
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText != null && !newText.isEmpty()) {
+                    procurarProduto(newText.toLowerCase());
+                }
+                return true;
+            }
+        });
+
+    }
+
+    private void procurarProduto(String newText) {
+        List<Produto> listaProdutoPesquisa = new ArrayList<>();
+        for (Produto produto : listaProdutos) {
+
+            if (produto.getNome() != null){
+                String nome = produto.getNome().toLowerCase();
+
+                if(nome.contains(newText)){
+                    listaProdutoPesquisa.add(produto);
+                }
+            }
+        }
+        adapter = new ProdutoAdapter(this,listaProdutoPesquisa);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_cliente, menu);
+
+        // Configurar Botao de Pesquisa
+        MenuItem item = menu.findItem(R.id.search);
+        searchView.setMenuItem(item);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        // Usuario Logado
+        //menu.setGroupVisible(R.id.group_logado, true);
+
+        // Usuario Deslogado
+        //menu.setGroupVisible(R.id.group_deslogado,true);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.search:
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.cart:
+                Toast.makeText(this, "Cart", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.signIn:
+                Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.signOut:
+                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.profile:
+                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.about:
+                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -111,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void inicializarComponentes() {
         recyclerView = findViewById(R.id.recyclerProdutos);
+        searchView = findViewById(R.id.materialSearchPrincipal);
 
         // Firebase
         firestore = ConfiguracaoFirebase.getFireStore();

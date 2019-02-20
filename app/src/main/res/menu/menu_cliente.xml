@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:title="Carrinho"
+        app:showAsAction="ifRoom" />
+
+
+    <group
+        android:id="@+id/group_deslogado"
+        android:visible="false"
+        tools:visible="true">
+        <item
+            android:id="@+id/signIn"
+            android:title="Sign In" />
+
+
+    </group>
+
+    <group
+        android:id="@+id/group_logado"
+        android:visible="false"
+        tools:visible="true">
+        <item
+            android:id="@+id/signOut"
+            android:title="Sign Out" />
+
+
+        <item
+            android:id="@+id/profile"
+            android:title="Profile" />
+
+    </group>
+
+
+    <item
+        android:id="@+id/about"
+        android:title="About" />
+
+
+</menu>
