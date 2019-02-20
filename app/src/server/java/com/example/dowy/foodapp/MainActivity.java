@@ -1,6 +1,8 @@
 package com.example.dowy.foodapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onLongItemClick(View view, int position) {
 
+                        final Produto produtoSelecionado = listaProdutos.get(position);
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                        dialog.setMessage("Apagar produto '" + produtoSelecionado.getNome() + "'?");
+                        dialog.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                produtoSelecionado.remover();
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        dialog.setNegativeButton("Cancear", null);
+                        dialog.create();
+                        dialog.show();
+
                     }
 
                     @Override
@@ -144,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Firebase
         firestore = ConfiguracaoFirebase.getFireStore();
-        produtoRef = firestore.collection("Produto");
+        produtoRef = firestore.collection("Produtos");
 
 
     }

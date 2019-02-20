@@ -3,6 +3,7 @@ package com.example.dowy.foodapp.model;
 import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -33,6 +34,14 @@ public class Produto implements Serializable {
         documentRef.set(this, SetOptions.merge());
     }
 
+    public void remover() {
+        FirebaseFirestore firebaseFirestore = ConfiguracaoFirebase.getFireStore();
+        CollectionReference produtoRef = firebaseFirestore.collection("Produtos");
+        DocumentReference documentRef = produtoRef.document(getId());
+
+        documentRef.delete();
+    }
+
     public String getUnidade() {
         return unidade;
     }
@@ -41,6 +50,7 @@ public class Produto implements Serializable {
         this.unidade = unidade;
     }
 
+    @Exclude
     public String getId() {
         return id;
     }

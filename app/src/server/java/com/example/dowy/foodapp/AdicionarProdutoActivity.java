@@ -134,6 +134,7 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
             // Actualizar produto
             produto.actualizar(produtoSelecionado.getId());
             Toast.makeText(this, "Produto Actualizado", Toast.LENGTH_SHORT).show();
+            finish();
 
         } else {
             // Salvar produto
@@ -196,7 +197,7 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
             if (image != null) {
 
                 //Loading
-                loading("salvando imagem");
+                loading("Salvando imagem");
                 produtoImagem.setImageBitmap(image);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
