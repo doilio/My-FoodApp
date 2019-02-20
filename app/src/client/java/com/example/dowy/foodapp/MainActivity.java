@@ -86,7 +86,18 @@ public class MainActivity extends AppCompatActivity {
                 }
         ));
 
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
 
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                // Senao ao fecharmos a searchView ele vai mostrar a 2a lista
+                recarregarLista();
+            }
+        });
 
         // Configurar Listener para o Search Box
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -106,19 +117,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void recarregarLista() {
+        adapter = new ProdutoAdapter(this, listaProdutos);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
     private void procurarProduto(String newText) {
         List<Produto> listaProdutoPesquisa = new ArrayList<>();
         for (Produto produto : listaProdutos) {
 
-            if (produto.getNome() != null){
+            if (produto.getNome() != null) {
                 String nome = produto.getNome().toLowerCase();
 
-                if(nome.contains(newText)){
+                if (nome.contains(newText)) {
                     listaProdutoPesquisa.add(produto);
                 }
             }
         }
-        adapter = new ProdutoAdapter(this,listaProdutoPesquisa);
+        adapter = new ProdutoAdapter(this, listaProdutoPesquisa);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -150,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.search:
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cart:
                 Toast.makeText(this, "Cart", Toast.LENGTH_SHORT).show();
@@ -165,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.about:
-                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

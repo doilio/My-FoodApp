@@ -61,4 +61,7 @@ dependencies {
 
     // Material Search view
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+    // About Page Library
+    implementation 'com.github.medyo:android-about-page:1.2.5'
 }

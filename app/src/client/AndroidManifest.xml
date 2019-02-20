@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
+        <activity android:name="com.example.dowy.foodapp.AboutActivity"></activity>
         <activity
             android:name="com.example.dowy.foodapp.DetalheActivity"
-            android:parentActivityName="com.example.dowy.foodapp.MainActivity"></activity>
+            android:parentActivityName="com.example.dowy.foodapp.MainActivity" />
         <activity android:name="com.example.dowy.foodapp.MainActivity" />
     </application>
 
