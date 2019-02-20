@@ -2,4 +2,11 @@
     <string name="app_name">FoodApp</string>
     <string name="a_lista_de_produtos_ainda_encontra_se_vazia_adicione_itens">A lista de Produtos ainda encontra-se vazia, adicione itens</string>
     <string name="add_product_image_here">Add product image here</string>
+
+    <string-array name="unidade">
+        <item>Selecione unidade</item>
+        <item>1 Unidade</item>
+        <item>1 Kg</item>
+    </string-array>
+
 </resources>

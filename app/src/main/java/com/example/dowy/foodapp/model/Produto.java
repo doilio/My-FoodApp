@@ -4,12 +4,16 @@ import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable {
 
     private String id;
     private String nome;
     private String valor;
+    private String unidade;
     private String urlImagem;
 
     public Produto() {
@@ -18,8 +22,23 @@ public class Produto {
     public void salvar() {
 
         FirebaseFirestore firebaseFirestore = ConfiguracaoFirebase.getFireStore();
-        CollectionReference produtoRef = firebaseFirestore.collection("Produto");
+        CollectionReference produtoRef = firebaseFirestore.collection("Produtos");
         produtoRef.add(this);
+    }
+
+    public void actualizar(String id) {
+        FirebaseFirestore firebaseFirestore = ConfiguracaoFirebase.getFireStore();
+        CollectionReference produtoRef = firebaseFirestore.collection("Produtos");
+        DocumentReference documentRef = produtoRef.document(id);
+        documentRef.set(this, SetOptions.merge());
+    }
+
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
     }
 
     public String getId() {

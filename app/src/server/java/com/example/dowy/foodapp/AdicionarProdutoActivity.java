@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
@@ -21,17 +23,12 @@ import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
 import com.example.dowy.foodapp.model.Produto;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import dmax.dialog.SpotsDialog;
@@ -42,9 +39,10 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
     private EditText campoNome;
     private CurrencyEditText campoValor;
     private static final int SELECAO_GALERIA = 200;
-    private List<String> listaImagem = new ArrayList<>();
     private StorageReference storageRef;
-    private StorageReference alimentosRef;
+    private Spinner unidadeSpinner;
+    private Produto produtoSelecionado;
+    private Button butaoSalvar;
 
     private Produto produto;
     private AlertDialog dialog;
@@ -73,20 +71,52 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Carregar dados do spinner
+        carregarDadosSpinner();
+
+        produtoSelecionado = (Produto) getIntent().getSerializableExtra("produto_selecionado");
+        if (produtoSelecionado != null) {
+            toolbar.setTitle("Editar Produto");
+            setSupportActionBar(toolbar);
+            butaoSalvar.setText("Actualizar Produto");
+
+            //Recuperar dados para exibicao
+            campoNome.setText(produtoSelecionado.getNome());
+            campoValor.setText(produtoSelecionado.getValor());
+
+            String imageUrl = produtoSelecionado.getUrlImagem();
+            if (imageUrl != null) {
+                Picasso.get().load(imageUrl).into(produtoImagem);
+                produto.setUrlImagem(imageUrl);
+
+            }
+            //TODO recuperar posicao do spinner atraves do texto
+        }
+
     }
+
 
     public void validarCampos(View view) {
         String nome = campoNome.getText().toString().trim();
-        String valorRaw = String.valueOf(campoValor.getRawValue());//campoValor.getText().toString().trim();
+        String valorRaw = String.valueOf(campoValor.getRawValue()); //campoValor.getText().toString().trim();
         String valor = campoValor.getText().toString().trim();
+        String unidade = unidadeSpinner.getSelectedItem().toString();
 
-        if (listaImagem != null && !listaImagem.isEmpty()) {
+        //if (listaImagem != null && !listaImagem.isEmpty()) {
+        if (produto.getUrlImagem() != null && !produto.getUrlImagem().isEmpty()) {
             if (!nome.isEmpty()) {
                 if (!valorRaw.isEmpty() && !valorRaw.equals("0")) {
-                    produto.setValor(valor);
-                    produto.setNome(nome);
+                    if (!unidade.equals("Selecione unidade")) {
+                        produto.setValor(valor);
+                        produto.setNome(nome);
+                        produto.setUnidade(unidade);
 
-                    salvarAnuncio();
+                        salvarProduto(produto);
+
+                    } else {
+                        Toast.makeText(this, "Escolha unidade", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(this, "Insira valor", Toast.LENGTH_SHORT).show();
                 }
@@ -98,82 +128,109 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
         }
     }
 
-    private void salvarAnuncio() {
-        dialog = new SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Salvando Anuncio")
-                .setCancelable(false)
-                .build();
-        dialog.show();
-        // Garantir que imagem seja salva
+    private void salvarProduto(Produto produto) {
 
-        String urlImagem = listaImagem.get(0);
-        salvarFotoStorage(urlImagem);
-    }
+        if (produtoSelecionado != null) {
+            // Actualizar produto
+            produto.actualizar(produtoSelecionado.getId());
+            Toast.makeText(this, "Produto Actualizado", Toast.LENGTH_SHORT).show();
 
-    private void salvarFotoStorage(String urlImagem) {
-
-        //Criar NO no storage
-        storageRef = ConfiguracaoFirebase.getStorage();
-        alimentosRef = storageRef.child("Imagens")
-                .child("Alimentos")
-                .child(System.currentTimeMillis() + "");
-
-        //Fazer upload do arquivo
-        Uri fotoUri = Uri.parse(urlImagem);
-        UploadTask uploadTask = alimentosRef.putFile(fotoUri);
-
-        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-                return alimentosRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    String downloadUrl = downloadUri.toString();
-                    produto.setUrlImagem(downloadUrl);
-                    produto.salvar();
-
-                    dialog.dismiss();
-                    finish();
-                    Toast.makeText(AdicionarProdutoActivity.this, "Produto Salvo", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AdicionarProdutoActivity.this, "Erro ao carregar Imagem", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        } else {
+            // Salvar produto
+            produto.salvar();
+            Toast.makeText(this, "Produto Salvo", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
     }
+
+    private void carregarDadosSpinner() {
+        String[] unidade = getResources().getStringArray(R.array.unidade);
+
+        // Configurar spinner de estados
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, unidade);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unidadeSpinner.setAdapter(adapter);
+    }
+
 
     private void inicializarComponentes() {
         campoValor = findViewById(R.id.editValorProduto);
         campoNome = findViewById(R.id.editNomeProduto);
         produtoImagem = findViewById(R.id.imageViewProduto);
+        unidadeSpinner = findViewById(R.id.unidadeSpinner);
         produto = new Produto();
-
+        butaoSalvar = findViewById(R.id.salvarProduto);
 
         Locale locale = new Locale("pt", "MZ");
         campoValor.setLocale(locale);
+
+        //Firebase
+        storageRef = ConfiguracaoFirebase.getStorage();
+    }
+
+    private void loading(String msg) {
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage(msg)
+                .setCancelable(false)
+                .build();
+        dialog.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
-            Uri imagemSelecionada = data.getData();
-            String caminhoImagem = imagemSelecionada.toString();
+        Bitmap image = null;
+        if (requestCode == SELECAO_GALERIA && resultCode == RESULT_OK) {
+            try {
+                Uri imageLocation = data.getData();
 
-            //Configurar imagem no imageview
-            Picasso.get().load(imagemSelecionada).into(produtoImagem);
+                image = MediaStore.Images.Media.getBitmap(getContentResolver(), imageLocation);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            listaImagem.add(caminhoImagem);
+            if (image != null) {
+
+                //Loading
+                loading("salvando imagem");
+                produtoImagem.setImageBitmap(image);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                byte[] imageData = baos.toByteArray();
+
+                final StorageReference imageRef = storageRef.child("Imagens")
+                        .child("Alimentos")
+                        .child(System.currentTimeMillis() + "");
+
+                UploadTask uploadTask = imageRef.putBytes(imageData);
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return imageRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            String downloadUrl = downloadUri.toString();
+                            produto.setUrlImagem(downloadUrl);
+                            dialog.dismiss();
+
+                        } else {
+                            Toast.makeText(AdicionarProdutoActivity.this, "Failed to upload", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         }
     }
 }

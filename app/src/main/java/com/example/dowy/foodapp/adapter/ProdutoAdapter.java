@@ -59,6 +59,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
         }
         viewHolder.nome.setText(produtoActual.getNome());
         viewHolder.preco.setText(produtoActual.getValor());
+        viewHolder.unidade.setText(produtoActual.getUnidade());
 
     }
 

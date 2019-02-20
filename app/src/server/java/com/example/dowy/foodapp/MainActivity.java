@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.dowy.foodapp.adapter.ProdutoAdapter;
 import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
+import com.example.dowy.foodapp.helper.RecyclerItemClickListener;
 import com.example.dowy.foodapp.model.Produto;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -27,7 +30,7 @@ import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView recyclerView;
     private ProdutoAdapter adapter;
     private List<Produto> listaProdutos = new ArrayList<>();
     private FirebaseFirestore firestore;
@@ -48,12 +51,37 @@ public class MainActivity extends AppCompatActivity {
 
         // Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
         //Configurar Adapter
         adapter = new ProdutoAdapter(this, listaProdutos);
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+
+        // Eventos de Clique na recyclerView
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                this,
+                recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Produto produtoSelecionado = listaProdutos.get(position);
+                        Intent i = new Intent(getApplicationContext(), AdicionarProdutoActivity.class);
+                        i.putExtra("produto_selecionado", produtoSelecionado);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }
+        ));
 
     }
 
@@ -112,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void inicializarComponentes() {
-        mRecyclerView = findViewById(R.id.recyclerProdutos);
+        recyclerView = findViewById(R.id.recyclerProdutos);
 
         // Firebase
         firestore = ConfiguracaoFirebase.getFireStore();

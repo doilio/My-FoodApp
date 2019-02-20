@@ -7,15 +7,16 @@
     android:orientation="vertical"
     tools:context="com.example.dowy.foodapp.AdicionarProdutoActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <ImageView
         android:id="@+id/imageViewProduto"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/add_product_image_here"
-        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+        android:src="@drawable/add_image"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +47,12 @@
             android:hint="1060.00 MTn"
             android:inputType="textPersonName"
             android:padding="10dp" />
+
+        <Spinner
+            android:id="@+id/unidadeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
 
         <Button
