@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ public class DetalheActivity extends AppCompatActivity {
     private Produto produtoSelecionado;
     private ImageView imagem;
     private TextView unidade, preco;
+    private NumberPicker nrPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,17 @@ public class DetalheActivity extends AppCompatActivity {
             unidade.setText(produtoSelecionado.getUnidade());
             preco.setText(produtoSelecionado.getValor());
         }
+
+        //Number Picker Listener
+        nrPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                Toast.makeText(DetalheActivity.this, "selected number: "+picker.getValue(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,5 +82,10 @@ public class DetalheActivity extends AppCompatActivity {
         imagem = findViewById(R.id.imagem_detalhe);
         unidade = findViewById(R.id.unidade_detalhe);
         preco = findViewById(R.id.valor_detalhe);
+        nrPicker = findViewById(R.id.numberPicker);
+
+        // Valor Minimo e maximo do picker
+        nrPicker.setMinValue(1);
+        nrPicker.setMaxValue(20);
     }
 }

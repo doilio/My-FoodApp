@@ -68,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Produto produtoSelecionado = listaProdutos.get(position);
+
+                        //Aqui estou a usar duas Listas, logo este metodo tem que servir para ambas
+                        List<Produto> listaProdutosActualizada = adapter.getListaProdutos();
+                        //Produto produtoSelecionado = listaProdutos.get(position);
+                        Produto produtoSelecionado = listaProdutosActualizada.get(position);
                         Intent i = new Intent(getApplicationContext(), DetalheActivity.class);
                         i.putExtra("produto_selecionado", produtoSelecionado);
                         startActivity(i);

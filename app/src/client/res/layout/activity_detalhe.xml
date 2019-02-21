@@ -28,7 +28,7 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:src="@drawable/padrao"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <View
                 android:layout_width="match_parent"
@@ -53,47 +53,189 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardUseCompatPadding="false">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                app:cardUseCompatPadding="false">
 
-                <TextView
-                    android:id="@+id/unidade_detalhe"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="24dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Valor"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/unidade_detalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView2"
+                        android:text="1 Kg Brocolis"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textDivider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/unidade_detalhe"
+                        android:layout_toRightOf="@id/unidade_detalhe"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="•"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/valor_detalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/unidade_detalhe"
+                        android:layout_toRightOf="@id/textDivider"
+                        android:text="250,00 MTn"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/valor_detalhe"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider"
+                        android:layout_marginBottom="16dp"
+                        android:text="Quantidade"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView3"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="34dp"
+                        android:text="Seleccione a quantidade:"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <NumberPicker
+                        android:id="@+id/numberPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/divider"
+                        android:layout_marginLeft="32dp"
+                        android:layout_toRightOf="@id/textView"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 Kg Brocolis"
-                    android:textColor="@android:color/black"
-                    android:textStyle="normal"
-                    android:textSize="18sp"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="4dp"
-                    android:paddingLeft="4dp"
-                    android:text="•"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Total por produto"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/valor_detalhe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="250,00 MTn"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="normal" />
+                    <TextView
+                        android:id="@+id/valor_detalhe1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView4"
+                        android:text="250,00 MTn"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/textDivider1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/valor_detalhe1"
+                        android:layout_toRightOf="@id/valor_detalhe1"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="x"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
 
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/quantidade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/valor_detalhe1"
+                        android:layout_toRightOf="@id/textDivider1"
+                        android:text="3"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@id/valor_detalhe1"
+                        android:layout_alignParentRight="true"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="750.00 MTn"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/adicionarCarrinho"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/valor_detalhe1"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Adicionar  ao Carrinho" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
 
     </android.support.v4.widget.NestedScrollView>
 

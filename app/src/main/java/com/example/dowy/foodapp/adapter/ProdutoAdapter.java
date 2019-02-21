@@ -26,6 +26,10 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
         this.listaProdutos = listaProdutos;
     }
 
+    public List<Produto> getListaProdutos() {
+        return listaProdutos;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imagem;
         private TextView unidade;
