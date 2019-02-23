@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blackcat.currencyedittext.CurrencyEditText;
 import com.example.dowy.foodapp.R;
 import com.example.dowy.foodapp.model.Produto;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHolder> {
 
@@ -24,6 +26,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
     public ProdutoAdapter(Context context, List<Produto> listaProdutos) {
         this.context = context;
         this.listaProdutos = listaProdutos;
+
     }
 
     public List<Produto> getListaProdutos() {
@@ -61,8 +64,16 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
         if (photoUri != null) {
             Picasso.get().load(photoUri).into(viewHolder.imagem);
         }
+
+        // Getting the raw Value from firestore and formating it back
+        // Raw 1500. Formatted 15,00. with Locale 15,00 MTn
+        CurrencyEditText cet = new CurrencyEditText(context,null);
+        Locale locale = new Locale("pt", "MZ");
+        cet.setLocale(locale);
+        String currentText = cet.formatCurrency(Long.toString(produtoActual.getValor()));
+
+        viewHolder.preco.setText(currentText);
         viewHolder.nome.setText(produtoActual.getNome());
-        viewHolder.preco.setText(produtoActual.getValor());
         viewHolder.unidade.setText(produtoActual.getUnidade());
 
     }

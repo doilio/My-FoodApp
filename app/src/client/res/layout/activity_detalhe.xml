@@ -178,7 +178,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/valor_detalhe1"
+                        android:id="@+id/valor_detalheProd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView4"
@@ -190,8 +190,8 @@
                         android:id="@+id/textDivider1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/valor_detalhe1"
-                        android:layout_toRightOf="@id/valor_detalhe1"
+                        android:layout_alignBaseline="@id/valor_detalheProd"
+                        android:layout_toRightOf="@id/valor_detalheProd"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:text="x"
@@ -199,20 +199,20 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/quantidade"
+                        android:id="@+id/quantidadeEscolhida"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/valor_detalhe1"
+                        android:layout_alignBaseline="@id/valor_detalheProd"
                         android:layout_toRightOf="@id/textDivider1"
                         android:text="3"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/valorTotalProduto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/valor_detalhe1"
+                        android:layout_alignBaseline="@id/valor_detalheProd"
                         android:layout_alignParentRight="true"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
@@ -225,9 +225,10 @@
                         android:id="@+id/adicionarCarrinho"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/valor_detalhe1"
+                        android:layout_below="@id/valor_detalheProd"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
+                        android:onClick="adicionarACarrinho"
                         android:text="Adicionar  ao Carrinho" />
 
                 </RelativeLayout>

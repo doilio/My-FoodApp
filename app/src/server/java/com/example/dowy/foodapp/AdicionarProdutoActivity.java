@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +28,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Attr;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
@@ -46,6 +49,7 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
 
     private Produto produto;
     private AlertDialog dialog;
+    private CurrencyEditText cet;
 
 
     @Override
@@ -83,7 +87,10 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
 
             //Recuperar dados para exibicao
             campoNome.setText(produtoSelecionado.getNome());
-            campoValor.setText(produtoSelecionado.getValor());
+            //campoValor.setText(produtoSelecionado.getValor());
+
+           String valorFormatado = cet.formatCurrency(produtoSelecionado.getValor());
+            campoValor.setText(valorFormatado);
 
             String imageUrl = produtoSelecionado.getUrlImagem();
             if (imageUrl != null) {
@@ -108,7 +115,8 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
             if (!nome.isEmpty()) {
                 if (!valorRaw.isEmpty() && !valorRaw.equals("0")) {
                     if (!unidade.equals("Selecione unidade")) {
-                        produto.setValor(valor);
+                        //produto.setValor(valor);
+                        produto.setValor(campoValor.getRawValue());
                         produto.setNome(nome);
                         produto.setUnidade(unidade);
 
@@ -163,6 +171,8 @@ public class AdicionarProdutoActivity extends AppCompatActivity {
         unidadeSpinner = findViewById(R.id.unidadeSpinner);
         produto = new Produto();
         butaoSalvar = findViewById(R.id.salvarProduto);
+        cet = new CurrencyEditText(this, null);
+
 
         Locale locale = new Locale("pt", "MZ");
         campoValor.setLocale(locale);

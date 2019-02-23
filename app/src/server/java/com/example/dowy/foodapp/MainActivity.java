@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.blackcat.currencyedittext.CurrencyEditText;
 import com.example.dowy.foodapp.adapter.ProdutoAdapter;
 import com.example.dowy.foodapp.helper.ConfiguracaoFirebase;
 import com.example.dowy.foodapp.helper.RecyclerItemClickListener;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 

@@ -13,7 +13,7 @@ public class Produto implements Serializable {
 
     private String id;
     private String nome;
-    private String valor;
+    private long valor;
     private String unidade;
     private String urlImagem;
 
@@ -67,14 +67,6 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    public String getValor() {
-        return valor;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
-
     public String getUrlImagem() {
         return urlImagem;
     }
@@ -83,4 +75,11 @@ public class Produto implements Serializable {
         this.urlImagem = urlImagem;
     }
 
+    public long getValor() {
+        return valor;
+    }
+
+    public void setValor(long valor) {
+        this.valor = valor;
+    }
 }
