@@ -204,7 +204,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@id/valor_detalheProd"
                         android:layout_toRightOf="@id/textDivider1"
-                        android:text="3"
+                        android:text="1"
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 

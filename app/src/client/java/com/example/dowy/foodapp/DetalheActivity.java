@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 import com.blackcat.currencyedittext.CurrencyEditText;
 import com.example.dowy.foodapp.model.Produto;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 public class DetalheActivity extends AppCompatActivity {
 
@@ -27,6 +28,9 @@ public class DetalheActivity extends AppCompatActivity {
     private TextView valorTotal;
     private String precoProduto;
     private CurrencyEditText cet;
+    private Locale locale;
+    private long valParaCalculo;
+    private long valParaApresentacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +55,29 @@ public class DetalheActivity extends AppCompatActivity {
             }
             unidade.setText(produtoSelecionado.getUnidade());
 
-
+            cet.setLocale(locale);
             String valorFormatado = cet.formatCurrency(produtoSelecionado.getValor());
             preco.setText(valorFormatado);
+            valorTotal.setText(valorFormatado);
+            precoProd.setText(valorFormatado);
+            long val = produtoSelecionado.getValor();
+            valParaCalculo = (long) (val * 0.01);
+            //precoProd.setText(String.valueOf(valParaCalculo));
+
         }
 
         //Number Picker Listener
         nrPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                qtdEscolhida.setText(newVal);
+                String qtd = String.valueOf(newVal);
+                qtdEscolhida.setText(qtd);
+
+                // Calcular Total
+                valParaApresentacao = valParaCalculo * 100;
+                long valTotal =(newVal * valParaApresentacao);
+                String valorFormatado = cet.formatCurrency(valTotal);
+                valorTotal.setText(valorFormatado);
             }
         });
 
@@ -97,9 +114,10 @@ public class DetalheActivity extends AppCompatActivity {
 
 
         cet = new CurrencyEditText(this, null);
+        locale = new Locale("pt", "MZ");
 
-        precoProd = findViewById(R.id.quantidadeEscolhida);
-        qtdEscolhida = findViewById(R.id.valor_detalheProd);
+        precoProd = findViewById(R.id.valor_detalheProd);
+        qtdEscolhida = findViewById(R.id.quantidadeEscolhida);
         valorTotal = findViewById(R.id.valorTotalProduto);
 
         // Valor Minimo e maximo do picker
