@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardUseCompatPadding="false">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imageCarrinho"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/food1" />
+
+        <TextView
+            android:id="@+id/nome_produto_carrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imageCarrinho"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toEndOf="@id/imageCarrinho"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Batata" />
+
+        <TextView
+            android:id="@+id/total_item_carrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/nome_produto_carrinho"
+            android:layout_marginTop="-2dp"
+            android:layout_alignParentEnd="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="150.00 MTn" />
+
+        <TextView
+            android:id="@+id/preco_carrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nome_produto_carrinho"
+            android:layout_alignStart="@id/nome_produto_carrinho"
+            android:fontFamily="sans-serif"
+            android:textColor="#8B000000"
+            android:textSize="14sp"
+            tools:text="37.00 MTn" />
+
+        <TextView
+            android:id="@+id/textDivider_carrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/preco_carrinho"
+            android:layout_toEndOf="@id/preco_carrinho"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="x"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/quantidade_carrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/textDivider_carrinho"
+            android:layout_alignBaseline="@id/preco_carrinho"
+            android:textSize="14sp"
+            tools:text="3 Kg" />
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

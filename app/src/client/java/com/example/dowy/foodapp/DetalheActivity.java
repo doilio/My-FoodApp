@@ -1,5 +1,6 @@
 package com.example.dowy.foodapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.dowy.foodapp.model.ItemProduto;
+import com.example.dowy.foodapp.model.Pedido;
 import com.example.dowy.foodapp.model.Produto;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DetalheActivity extends AppCompatActivity {
@@ -31,6 +36,9 @@ public class DetalheActivity extends AppCompatActivity {
     private Locale locale;
     private long valParaCalculo;
     private long valParaApresentacao;
+    private ItemProduto itemProduto;
+    private List<ItemProduto> itensCarrinho = new ArrayList<>();
+    long val;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +68,13 @@ public class DetalheActivity extends AppCompatActivity {
             preco.setText(valorFormatado);
             valorTotal.setText(valorFormatado);
             precoProd.setText(valorFormatado);
-            long val = produtoSelecionado.getValor();
+            val = produtoSelecionado.getValor();
             valParaCalculo = (long) (val * 0.01);
-            //precoProd.setText(String.valueOf(valParaCalculo));
 
+            //Preparando o Objecto
+            itemProduto.setIdProduto(produtoSelecionado.getId());
+            itemProduto.setNomeProduto(produtoSelecionado.getNome());
+            itemProduto.setUrlImagem(urlImagem);
         }
 
         //Number Picker Listener
@@ -75,9 +86,14 @@ public class DetalheActivity extends AppCompatActivity {
 
                 // Calcular Total
                 valParaApresentacao = valParaCalculo * 100;
-                long valTotal =(newVal * valParaApresentacao);
+                long valTotal = (newVal * valParaApresentacao);
                 String valorFormatado = cet.formatCurrency(valTotal);
                 valorTotal.setText(valorFormatado);
+
+                // Preparando o objecto
+                itemProduto.setValor(val);
+                itemProduto.setPreco(valTotal);
+                itemProduto.setQuantidade(newVal);
             }
         });
 
@@ -123,9 +139,16 @@ public class DetalheActivity extends AppCompatActivity {
         // Valor Minimo e maximo do picker
         nrPicker.setMinValue(1);
         nrPicker.setMaxValue(20);
+
+        itemProduto = new ItemProduto();
     }
 
     public void adicionarACarrinho(View view) {
-        Toast.makeText(this, "TODO: Criar Lista de Itens num carrinho", Toast.LENGTH_SHORT).show();
+        itensCarrinho.add(itemProduto);
+        Pedido pedido = new Pedido();
+        pedido.setProdutos(itensCarrinho);
+        pedido.salvar();
+        Toast.makeText(this, "Item adicionado!", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

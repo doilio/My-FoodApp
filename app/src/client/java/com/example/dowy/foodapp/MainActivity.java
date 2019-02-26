@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.search:
                 break;
             case R.id.cart:
-                Toast.makeText(this, "Cart", Toast.LENGTH_SHORT).show();
+                abrirCarrinho();
                 break;
             case R.id.signIn:
                 Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
@@ -215,6 +215,11 @@ public class MainActivity extends AppCompatActivity {
             // dismiss loader aqui
         });
 
+    }
+
+    private void abrirCarrinho() {
+        Intent i = new Intent(this, CarrinhoActivity.class);
+        startActivity(i);
     }
 
     private void inicializarComponentes() {
